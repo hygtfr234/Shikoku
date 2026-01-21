@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>四國冒險日誌 V21.0</title>
+    <title>四國冒險日誌 V22.0</title>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;900&family=Noto+Serif+TC:wght@900&display=swap" rel="stylesheet">
     <style>
         :root { --maple-bg: #87CEEB; }
@@ -112,7 +112,8 @@
             object-fit: contain; vertical-align: middle; 
             display: inline-block; filter: drop-shadow(1px 1px 0 rgba(0,0,0,0.2));
         }
-        .large-icon { width: 120px; height: auto; display: block; margin: 10px auto; filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.3)); }
+        /* 飛機圖示特別調整，與文字對齊 */
+        .plane-icon { width: 35px; height: 35px; margin-left: 8px; vertical-align: middle; filter: drop-shadow(1px 1px 0 rgba(0,0,0,0.2)); }
 
         /* 底部 Bar (EXP / Guild) */
         .footer-bar-container {
@@ -125,13 +126,17 @@
         .exp-fill { height: 100%; background: linear-gradient(to bottom, #00FF00, #00CC00); width: 99.99%; }
         .exp-text { color: #FFF; font-size: 12px; margin-left: 10px; font-family: monospace; white-space: nowrap; }
         
-        /* 公會廣播樣式 */
+        /* 公會廣播樣式 (彩虹跑馬燈) */
         .guild-marquee {
-            width: 100%; color: #00FF00; font-weight: bold; font-size: 14px;
+            width: 100%; font-weight: bold; font-size: 14px;
             display: flex; align-items: center; justify-content: center;
-            text-shadow: 1px 1px 0 #000; animation: pulse 2s infinite;
+            text-shadow: 1px 1px 0 #000; 
+            animation: rainbow 2s linear infinite;
         }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
+        @keyframes rainbow { 
+            0% { color: #ff0000; } 20% { color: #ffff00; } 40% { color: #00ff00; }
+            60% { color: #00ffff; } 80% { color: #0000ff; } 100% { color: #ff00ff; }
+        }
 
         /* NPC 對話框 */
         .npc-dialog {
@@ -169,8 +174,8 @@
         }
         /* 寶物位置調整 */
         .drop-1 { top: 90px; left: 15%; animation-delay: 0s; } /* 卷軸 */
-        .drop-2 { top: 70px; right: 15%; animation-delay: 0.5s; } /* 鑰匙 */
-        .drop-3 { top: 150px; right: 25%; animation-delay: 1s; } /* 發條 */
+        .drop-2 { top: 70px; right: 15%; animation-delay: 0.5s; } /* 炎魔頭盔 */
+        .drop-3 { top: 150px; right: 25%; animation-delay: 1s; } /* 日之鏢 */
 
         @keyframes float { 0%, 100% { top: 45px; } 50% { top: 35px; } }
         @keyframes bounceDrop { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
@@ -230,13 +235,13 @@
     // 🎨 圖示庫
     // =========================================================
     
-    // 飛機 icon (MapleStory Airplane Mount)
-    const PLANE_ICON = "https://maplestory.io/api/gms/62/item/1902015/icon";
+    // 一般飛機 icon (Flaticon)
+    const PLANE_ICON = "https://cdn-icons-png.flaticon.com/512/223/223467.png";
 
     // 楓之谷圖示 (Maplestory.io)
     // 導航圖示：全部改成回家卷軸 (2030000)
     const RETURN_SCROLL = "https://maplestory.io/api/gms/62/item/2030000/icon"; 
-    const SCROLL_ICON_INFO = "https://maplestory.io/api/gms/62/item/2040804/icon"; // 資訊按鈕用
+    const SCROLL_ICON_INFO = "https://maplestory.io/api/gms/62/item/2040804/icon"; 
 
     // 行程類別圖示
     const CAR_MOUNT = "https://maplestory.io/api/gms/62/item/1902000/icon"; 
@@ -254,16 +259,17 @@
     const SAKURA = "https://maplestory.io/api/gms/62/item/4000283/icon";
     const DOLPHIN = "https://maplestory.io/api/gms/62/item/5000049/icon"; 
 
-    // 拉圖斯掉落物 (已修正代碼)
-    const CHAOS_SCROLL = "https://maplestory.io/api/gms/62/item/2049100/icon"; // 混沌卷軸 (取代破圖眼飾)
-    const SPIRIT = "https://maplestory.io/api/gms/62/item/4000295/icon"; // 靈魂
-    const CLOCK_SPRING = "https://maplestory.io/api/gms/62/item/4000381/icon"; // 發條
+    // 拉圖斯掉落物 (更換為經典裝備)
+    const CHAOS_SCROLL = "https://maplestory.io/api/gms/62/item/2049100/icon"; // 混沌卷軸
+    const ZAKUM_HELM = "https://maplestory.io/api/gms/62/item/1002357/icon"; // 炎魔頭盔
+    const ILBI_STAR = "https://maplestory.io/api/gms/62/item/2070006/icon"; // 日之鏢
 
     // 天氣圖示
     const WEATHER_SUN = "https://maplestory.io/api/gms/62/item/4000038/icon"; 
     const WEATHER_CLOUD = "https://maplestory.io/api/gms/62/item/4031579/icon"; 
     const WEATHER_RAIN = "https://maplestory.io/api/gms/62/item/4000004/icon"; 
     const WEATHER_SNOW = "https://maplestory.io/api/gms/62/item/4000073/icon"; 
+    const WEATHER_MIX = "https://maplestory.io/api/gms/62/item/2010009/icon"; // 冰+火(代表混合天氣)
 
     const ICONS = {
         plane: PLANE_ICON, boat: BOAT_ICON, car: CAR_MOUNT, food: BENTO,
@@ -275,13 +281,13 @@
     };
 
     // =========================================================
-    // 📅 行程資料 (V21.0 - 內建天氣+修正版)
+    // 📅 行程資料 (V22.0 - 天氣定錨版)
     // =========================================================
     const itinerary = {
         1: {
             title: "Day 1｜抵達高松",
             date: "1/23 (五)", location: "Takamatsu",
-            weather: { temp: "8°", status: "晴", detail: "H:12° L:3°", icon: WEATHER_SUN },
+            weather: { temp: "7°", status: "陰", detail: "H:7° L:1°", icon: WEATHER_CLOUD },
             events: [
                 { time: "07:00", title: "CI278 桃園起飛", desc: "前往高松，冒險開始！", icon: 'plane', noNav: true },
                 { time: "10:20", title: "抵達高松空港", desc: "入境、前往 Toyota 租車", lat: 34.2127, lng: 134.0175, icon: 'car', link: "https://www.google.com/search?q=toyota+rent+a+car+takamatsu+airport+shop" },
@@ -295,7 +301,7 @@
         2: {
             title: "Day 2｜小豆島",
             date: "1/24 (六)", location: "Shodoshima",
-            weather: { temp: "9°", status: "多雲", detail: "H:11° L:5°", icon: WEATHER_CLOUD },
+            weather: { temp: "8°", status: "雪/晴", detail: "H:8° L:2°", icon: WEATHER_MIX },
             events: [
                 { time: "08:00", title: "高松港 → 土庄港", desc: "搭乘渡輪 (約1H)", lat: 34.3524, lng: 134.0520, icon: 'boat' },
                 { time: "09:30", title: "橄欖公園", desc: "魔女宅急便掃帚拍照", lat: 34.4754, lng: 134.2947, icon: 'nature' },
@@ -308,12 +314,12 @@
         3: {
             title: "Day 3｜彈性選擇日",
             date: "1/25 (日)", location: "Kotohira",
-            weather: { temp: "7°", status: "晴", detail: "H:10° L:2°", icon: WEATHER_SUN },
+            weather: { temp: "8°", status: "陰/晴", detail: "H:8° L:1°", icon: WEATHER_CLOUD },
             eventsMain: [
                 { time: "09:00", title: "金刀比羅宮", desc: "挑戰1368階梯，參拜狗狗神", lat: 34.1837, lng: 133.8122, icon: 'shrine' },
                 { time: "12:30", title: "山越烏龍麵", desc: "烏龍麵名店午餐", lat: 34.2384, lng: 133.9213, icon: 'food' },
                 { time: "14:30", title: "滿濃公園", desc: "國營公園賞花散步", lat: 34.1678, lng: 133.8647, icon: 'sight', link: "https://maps.app.goo.gl/eeARXireyGCwiDNd9" },
-                { time: "18:00", title: "市區晚餐", desc: "返回高松", lat: 34.3428, lng: 134.0466, icon: 'food' }
+                { time: "18:00", title: "市區晚餐", desc: "返回高松", lat: 34.3428, lng: 134.0466, icon: 'dinner' }
             ],
             eventsBackup: [
                 { time: "09:00", title: "前往男木島", desc: "高松港搭船前往", lat: 34.3524, lng: 134.0520, icon: 'boat' },
@@ -326,7 +332,7 @@
         4: {
             title: "Day 4｜倉敷一日遊",
             date: "1/26 (一)", location: "Kurashiki",
-            weather: { temp: "6°", status: "陰", detail: "H:9° L:4°", icon: WEATHER_CLOUD },
+            weather: { temp: "9°", status: "陰", detail: "H:9° L:1°", icon: WEATHER_CLOUD },
             events: [
                 { time: "08:00", title: "前往倉敷", desc: "自駕/JR (瀨戶大橋)", lat: 34.5951, lng: 133.7667, icon: 'car' },
                 { time: "10:00", title: "倉敷美觀地區", desc: "運河遊船、古街散步", lat: 34.5957, lng: 133.7712, icon: 'sakura' },
@@ -339,7 +345,7 @@
         5: {
             title: "Day 5｜返程日",
             date: "1/27 (二)", location: "Takamatsu",
-            weather: { temp: "8°", status: "晴", detail: "H:13° L:4°", icon: WEATHER_SUN },
+            weather: { temp: "11°", status: "陰", detail: "H:11° L:3°", icon: WEATHER_CLOUD },
             events: [
                 { time: "10:00", title: "高松中央商店街", desc: "八大條商店街 自由逛", lat: 34.3444, lng: 134.0522, icon: 'shop' },
                 { time: "10:00", title: "丸龜町 GREEN", desc: "時尚購物商場", lat: 34.3444, lng: 134.0490, icon: 'shop' },
@@ -347,7 +353,7 @@
                 { time: "14:30", title: "還車 (Toyota 空港店)", desc: "加油、還車", lat: 34.2127, lng: 134.0175, icon: 'car', link: "https://www.google.com/search?q=toyota+rent+a+car+takamatsu+airport+shop" },
                 { time: "18:55", title: "CI179 起飛返台", desc: "Bye Bye!", lat: 34.2142, lng: 134.0157, icon: 'plane', noNav: true }
             ],
-            note: "水族館跟機場算順路，但要抓好還車時間。"
+            note: "HP藥水已耗盡，寵物將禁止您明日上班"
         }
     };
 
@@ -381,7 +387,7 @@
         let html = `
             <div class="weather-panel">
                 <div class="weather-left">
-                    <div class="weather-loc">📍 ${data.location} ${data.date}</div>
+                    <div class="weather-loc">📍 ${data.location}</div>
                     <div class="weather-status">${w.status}</div>
                     <div class="weather-detail">${w.detail}</div>
                 </div>
@@ -447,7 +453,7 @@
                         <span class="quest-time">${event.time}</span>
                         <span class="quest-title">
                             ${event.title} 
-                            <img src="${iconSrc}" class="event-icon-img" alt="icon">
+                            <img src="${iconSrc}" class="plane-icon" alt="icon">
                         </span>
                     </div>
                     <div class="quest-desc">${event.desc}</div>
@@ -481,8 +487,8 @@
                 <div class="haidilao-text">海底撈月</div>
                 <img src="https://maplestory.io/api/gms/62/mob/8500001/render/move?center=true" class="papulatus-img" alt="papulatus">
                 <img src="${CHAOS_SCROLL}" class="drop-item drop-1" title="混沌卷軸">
-                <img src="${SPIRIT}" class="drop-item drop-2" title="異界鑰匙">
-                <img src="${CLOCK_SPRING}" class="drop-item drop-3" title="發條">
+                <img src="${ZAKUM_HELM}" class="drop-item drop-2" title="炎魔頭盔">
+                <img src="${ILBI_STAR}" class="drop-item drop-3" title="日之鏢">
             </div>
 
             <div class="chat-log">
@@ -529,6 +535,7 @@
         }
     }
 
+    // 已不需要 fetchWeather，直接使用內建定錨數據
     loadDay(1);
 </script>
 
