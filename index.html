@@ -3,34 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>四國冒險日誌 V9.0</title>
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;900&family=Noto+Serif+TC:wght@900&display=swap" rel="stylesheet">
+    <title>四國冒險日誌 V10.0</title>
+    <!-- 引入可愛字體 -->
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root { --maple-bg: #87CEEB; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
         body {
             font-family: 'M PLUS Rounded 1c', sans-serif;
             background-color: var(--maple-bg);
+            /* 背景圖 */
             background-image: url('https://i.pinimg.com/originals/1e/86/82/1e8682d029094054a138c2084c83091e.jpg');
             background-size: cover; background-attachment: fixed; background-position: center bottom;
             margin: 0; padding: 8px; color: #333; padding-bottom: 60px; overflow-x: hidden;
         }
+
         .quest-window {
             max-width: 600px; margin: 5px auto; background: #FDFDFD;
             border: 2px solid #888; border-radius: 12px;
-            box-shadow: 0 0 0 3px #555, 0 10px 20px rgba(0,0,0,0.4); overflow: hidden; position: relative; z-index: 10;
+            box-shadow: 0 0 0 3px #555, 0 10px 20px rgba(0,0,0,0.4); 
+            overflow: hidden; position: relative; z-index: 10;
         }
+
         .window-header {
             background: linear-gradient(to bottom, #4b6cb7, #182848);
             padding: 10px 15px; color: white; display: flex; justify-content: space-between; align-items: center;
             border-bottom: 3px solid #333;
         }
+
         .header-icon {
             width: 40px; height: 40px; object-fit: contain; margin-right: 10px;
             filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.5)); animation: bounce 2s infinite;
         }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-        
+
+        /* Tabs */
         .tabs { display: flex; width: 100%; background: #E0E0E0; border-bottom: 2px solid #AAA; }
         .tab-btn {
             flex: 1; background: linear-gradient(to bottom, #f8f8f8, #dcdcdc);
@@ -42,9 +50,10 @@
         .tab-btn.active { background: #FFF; color: #000; box-shadow: inset 0 -4px 0 #FFCC00; }
         .tab-sub { font-size: 11px; font-weight: normal; color: #666; margin-top: 2px; }
         .tab-btn.active .tab-sub { color: #000; font-weight: bold; }
-        
+
         .content-area { background: #FFF; padding: 15px; min-height: 480px; position: relative; }
-        
+
+        /* 天氣面板 */
         .weather-panel {
             background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
             border: 2px solid #1E88E5; border-radius: 12px; padding: 12px; margin-bottom: 15px;
@@ -57,20 +66,19 @@
         .weather-temp { font-size: 26px; color: #D84315; font-weight: 900; }
         .weather-fallback-btn {
             display: inline-block; background: #fff; color: #1565C0; text-decoration: none;
-            padding: 5px 10px; border-radius: 15px; font-size: 12px; font-weight: bold;
-            margin-top: 5px; border: 1px solid #1565C0;
+            padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: bold;
+            margin-top: 8px; border: 2px solid #1565C0;
         }
 
-        .sub-nav-container {
-            display: flex; gap: 10px; margin-bottom: 20px; background: #EEE; padding: 5px; border-radius: 8px;
-        }
-        .sub-nav-btn {
-            flex: 1; padding: 10px; border: 2px solid transparent; border-radius: 6px;
-            font-weight: bold; cursor: pointer; background: #CCC; color: #555;
-        }
-        .sub-nav-btn.active-main { background: #FFF; border-color: #FFCC00; color: #333; }
-        .sub-nav-btn.active-backup { background: #E6E6FA; border-color: #9370DB; color: #4B0082; }
+        /* 導航按鈕 */
+        .btn-nav { flex: 1; background: linear-gradient(to bottom, #4facfe, #00f2fe); padding: 12px; }
+        .btn-info { width: 60px; background: linear-gradient(to bottom, #ffd200, #f7971e); color: white; font-size: 18px; text-shadow: 0 1px 1px rgba(0,0,0,0.3); }
+        .btn-hotel { width:100%; background: linear-gradient(to bottom, #ff758c, #ff7eb3); font-size: 20px; padding: 18px; margin-top: 20px; border-radius: 8px; color: white; text-decoration: none; font-weight: bold; display: block; text-align: center; border: 1px solid #ff758c;}
+        
+        .action-btns { display: flex; gap: 8px; margin-top: 10px; }
+        .btn { display: flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: bold; color: white; text-decoration: none; }
 
+        /* 行程列表 */
         .quest-list { list-style: none; padding: 0; margin: 0; }
         .quest-item { border-bottom: 1px dashed #CCC; padding: 15px 0; }
         .quest-item:last-child { border-bottom: none; }
@@ -80,42 +88,51 @@
             font-size: 14px; font-weight: bold; margin-right: 10px; min-width: 60px; text-align: center;
         }
         .quest-title { font-size: 18px; font-weight: 800; color: #222; display: flex; align-items: center; }
-        /* 圖示樣式 */
-        .event-icon-img { width: 30px; height: 30px; margin-left: 8px; object-fit: contain; vertical-align: middle; }
         .quest-desc { font-size: 15px; color: #555; margin: 0 0 12px 0; line-height: 1.4; padding-left: 2px; }
-
-        /* 按鈕群組 */
-        .action-btns { display: flex; gap: 8px; margin-top: 10px; }
-        .btn {
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 8px; font-weight: bold; font-size: 15px; text-decoration: none; color: white;
-            box-shadow: 0 4px 0 rgba(0,0,0,0.2); transition: 0.1s; border: 1px solid rgba(0,0,0,0.1);
-        }
-        .btn:active { transform: translateY(4px); box-shadow: none; }
         
-        /* 導航按鈕 (左邊長) */
-        .btn-nav { flex: 1; background: linear-gradient(to bottom, #4facfe, #00f2fe); padding: 12px; }
-        
-        /* 資訊按鈕 (右邊短黃色) */
-        .btn-info { 
-            width: 60px; background: linear-gradient(to bottom, #ffd200, #f7971e); color: white; 
-            font-size: 18px; text-shadow: 0 1px 1px rgba(0,0,0,0.3);
-        }
-        
-        .btn-hotel { width:100%; background: linear-gradient(to bottom, #ff758c, #ff7eb3); font-size: 20px; padding: 18px; margin-top: 20px;}
-
-        .npc-dialog {
-            background: #FFF8DC; border: 2px solid #DAA520; border-radius: 12px;
-            padding: 15px 15px 15px 65px; position: relative; margin-top: 25px;
-            font-size: 14px; line-height: 1.6; color: #4A3B2A; z-index: 5;
-        }
-        .npc-dialog::before {
-            content: ''; width: 50px; height: 50px;
-            background-image: url('https://maplestory.io/api/gms/62/mob/1210102/render/move?center=true');
-            background-size: contain; background-repeat: no-repeat;
-            position: absolute; left: 8px; top: 50%; transform: translateY(-50%);
+        /* 小圖示設定 */
+        .event-icon-img { 
+            width: 32px; height: 32px; margin-left: 8px; 
+            object-fit: contain; vertical-align: middle; 
+            display: inline-block; /* 強制顯示 */
         }
 
+        /* 拉圖斯 + 對話框樣式 */
+        .papulatus-container {
+            display: none; /* 預設隱藏 */
+            text-align: center;
+            margin-top: 30px;
+            position: relative;
+        }
+        .papulatus-img {
+            width: 150px;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .speech-bubble {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            border: 3px solid #333;
+            border-radius: 15px;
+            padding: 10px 20px;
+            font-size: 20px;
+            font-weight: 900;
+            color: #d32f2f;
+            white-space: nowrap;
+            box-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+        }
+        .speech-bubble::after {
+            content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+            border-width: 10px 10px 0; border-style: solid; border-color: #333 transparent;
+        }
+
+        /* 經驗值條 */
         .exp-bar-container {
             position: fixed; bottom: 0; left: 0; width: 100%; height: 40px;
             background: #2b2b2b; border-top: 2px solid #555;
@@ -124,17 +141,24 @@
         .exp-track { flex: 1; height: 16px; background: #111; border-radius: 8px; overflow: hidden; }
         .exp-fill { height: 100%; background: linear-gradient(to bottom, #00FF00, #00CC00); width: 0%; transition: 0.5s; }
 
-        #bgText {
-            display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-10deg);
-            font-family: 'Noto Serif TC', serif; font-size: 80px; font-weight: 900;
-            color: rgba(0,0,0,0.08); white-space: nowrap; pointer-events: none; z-index: 0;
+        /* NPC 對話框 */
+        .npc-dialog {
+            background: #FFF8DC; border: 2px solid #DAA520; border-radius: 12px;
+            padding: 15px 15px 15px 65px; position: relative; margin-top: 25px;
+            font-size: 14px; line-height: 1.6; color: #4A3B2A;
         }
-        .snowflake {
-            position: fixed; top: -10px; z-index: 9999; color: #FFF; font-size: 1em; opacity: 0.8;
-            user-select: none; pointer-events: none; animation: fall linear infinite; text-shadow: 0 0 2px #000;
+        .npc-dialog::before {
+            content: ''; width: 50px; height: 50px;
+            background-image: url('https://maplestory.io/api/gms/62/mob/1210102/render/move?center=true');
+            background-size: contain; background-repeat: no-repeat;
+            position: absolute; left: 8px; top: 50%; transform: translateY(-50%);
         }
-        @keyframes fall { 0% { transform: translateY(-10vh) translateX(0); } 100% { transform: translateY(110vh) translateX(20px); } }
-        .snow-container { display: none; }
+
+        /* Sub Nav */
+        .sub-nav-container { display: flex; gap: 10px; margin-bottom: 20px; background: #EEE; padding: 5px; border-radius: 8px; }
+        .sub-nav-btn { flex: 1; padding: 10px; border: 2px solid transparent; border-radius: 6px; font-weight: bold; cursor: pointer; background: #CCC; color: #555; }
+        .sub-nav-btn.active-main { background: #FFF; border-color: #FFCC00; color: #333; }
+        .sub-nav-btn.active-backup { background: #E6E6FA; border-color: #9370DB; color: #4B0082; }
 
     </style>
 </head>
@@ -143,7 +167,8 @@
 <div class="quest-window">
     <div class="window-header">
         <div style="display:flex; align-items:center;">
-            <img id="headerIconImg" src="" class="header-icon" alt="icon">
+            <!-- 標題旁的圖示 -->
+            <img src="https://maplestory.io/api/gms/62/mob/1210100/render/move?center=true" class="header-icon" alt="icon">
             <div style="font-size:18px; text-shadow:1px 1px 0 #000;">🍁 賜國玩四國</div>
         </div>
         <div style="font-size:12px; background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:4px;">LV.2026 日本四國初心者</div>
@@ -159,7 +184,7 @@
     </div>
 
     <div class="content-area" id="mainContent">
-        <div id="bgText">海底撈月</div>
+        <!-- JS 內容渲染 -->
     </div>
 </div>
 
@@ -169,41 +194,34 @@
     <span style="color:white; font-size:12px; margin-left:10px;" id="expText">0%</span>
 </div>
 
-<div id="snowContainer" class="snow-container"></div>
-
 <script>
     // =========================================================
-    // 🎨 內建 Base64 圖示庫 (新增：飯、相機、車、購物)
+    // 🎨 圖片更換區 (請在這裡貼上您的圖片網址)
     // =========================================================
     
-    const HEADER_ICON_SRC = "https://maplestory.io/api/gms/62/mob/1210100/render/move?center=true";
+    // 【在這裡貼上您自己的圖片網址】
+    const MY_PHOTO_URL = "https://cdn-icons-png.flaticon.com/512/3125/3125713.png"; // 如果您有照片，把網址貼在引號內
 
-    // 華航飛機
-    const PLANE_ICON = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjRTMwMDc5IiBkPSJNMzUuNCAyNDQuOGMtMi45IDguNSAxLjYgMTcuNyAxMC4zIDIwLjUgOC43IDIuOCAxOC4xLTIgMjEuMS0xMC41IDMuMS04LjYtMS42LTE3LjktMTAuNC0yMC43LTguNi0yLjgtMTguMSAxLjktMjEgMTAuN3ptMTI4LjIgOTEuMWMtMTYuNy01LjMtMjUuMSA4LjgtMTguNCAxOS45IDUuMiA4LjUgMTkuMiA5LjIgMzEuOSAzLjggMTEuNy01IDExLjItMTcuNS41LTIxLjQtNC4xLTEuNS05LjItMi4yLTE0LTIuM3ptLTgwLjUgNzEuOGMtMTQuMyAxNS41IDUgMzIuMyAyMS40IDMwLjUgMTIuOS0xLjQgMTguNi0xMi42IDE0LjUtMjIuOS0zLjMtOC40LTE1LjYtMTQuNC0yNi41LTEyLjN6bTMxOS41LTg4LjJjLTE4LjUgMjMuNi00Ny41IDM4LjMtNjQuMyA1My4yLTIyLjYgMjAuMS0yNS4xIDUyLjEtMy41IDczLjEgMjEuNCAyMC45IDU4LjMgMTYuNCA4My44LTEwLjIgMjMuNS0yNC42IDMyLjUtNTcuMyAxNS45LTk4LjctNi41LTE2LjEtMTgtMTkuOS0zMS45LTE3LjR6bS0xMzUuMy01LjRjLTEuOS0xNS41LTE2LjgtMjEuMy0zMy0xMi45LTE2LjEgOC40LTE2LjggMjguNi0xLjMgMzQuNCAxMS42IDQuMyAyNy41LTMuMyAzMi43LTE2LjEgMS4xLTIuNyAxLjYtNS40IDEuNi01LjR6bTE0LjkgMTY4LjJjLTI1LjEgNi42LTI4LjIgNDAuNS00LjUgNDguMyAxOC42IDYuMSAzNy44LTE1IDMxLjQtMzcuNS0zLjUtMTIuMy0xNi45LTE1LjctMjYuOS0xMC44em0tMjIxLjYgMi44Yy04LjUgMTEuMS0yLjIgMjcuMiAxMS43IDI5LjUgMTEuMSAxLjkgMTguNC0xMC4xIDEyLjctMjAuNS00LjctOC41LTE1LjktMTQuOS0yNC40LTl6bTMzNi40LTI4LjRjLTIzLjUtOC42LTM1LjUgMTguNi0xOC40IDM2LjggMTMuNSAxNC4zIDM3LjMgNyAzOC0xMS44LjUtMTQuOC0xMC4xLTIxLjUtMTkuNi0yNXoiLz48L3N2Zz4=";
-    // 船
-    const BOAT_ICON = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMzA0RkZFIiBkPSJNMzIuNCAzNjUuOWM0OC45IDE4LjYgODcuOSAxNiAxMjQuOCAwIDM2LjktMTYuMSA3Ni0xOC42IDEyNC44IDAgNDguOSAxOC42IDg3LjkgMTYgMTI0LjggMCAzNi45LTE2LjEgNzYtMTguNiAxMjQuOCAwIDYuMSA4LjkgNC42IDE4LjIgMy41IDI1LjctMS4xIDcuNC02LjEgMTAuMy0xMi4yIDcuNC0zNi45LTE2LjEtNzYtMTguNi0xMjQuOCAwLTQ4LjkgMTguNi04Ny45IDE2LTEyNC44IDAtMzYuOSAxNi4xLTc2IDE4LjYtMTI0LjggMC0zNy0xNi4xLTc1LjktMTguNi0xMjQuOCAwLTQuOS0yLjEtMTEuMS01LTE4LjMtOC41LTcuMS0zLjQtMTMuNi0uNi0xNC41IDUuOHptNDUuMi02Ny42bDIzLjQtMTg2LjRjMS41LTExLjggMTEuNS0yMC40IDIzLjMtMjAuNGgyNDguMWMxMS44IDAgMjEuOCA4LjYgMjMuMyAyMC40bDIzLjQgMTg2LjRjLTMwLjItNy44LTcyLjMtNi41LTEwOC41IDUuOC0zNi45IDE2LjEtNzYgMTguNi0xMjQuOCAwLTM5LjktMTMuNi04NS41LTEzLjYtMTA4LjItNS44eiIvPjwvc3ZnPg==";
-    // 美食 (Food)
-    const FOOD_ICON = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjRkY5ODAwIiBkPSJNMTYwIDk2Yy0xNy43IDAtMzIgMTQuMy0zMiAzMnYyMjRjMCAxNy43IDE0LjMgMzIgMzIgMzJzMzItMTQuMyAzMi0zMlYxMjhjMC0xNy43LTE0LjMtMzItMzItMzJem0xOTIgMGMtMTcuNyAwLTMyIDE0LjMtMzIgMzJ2MjI0YzAgMTcuNyAxNC4zIDMyIDMyIDMyczMyLTE0LjMgMzItMzJWMTI4YzAtMTcuNy0xNC4zLTMyLTMyLTMyem0tOTYgMGMtMTcuNyAwLTMyIDE0LjMtMzIgMzJ2MjI0YzAgMTcuNyAxNC4zIDMyIDMyIDMyczMyLTE0LjMgMzItMzJWMTI4YzAtMTcuNy0xNC4zLTMyLTMyLTMyek0zMiAzMjB2MzJjMCA1MyAzNS44IDk3IDg0LjYgMTA5LjEgOS43IDYwLjIgNjIuMyAxMDYuNCAxMjUuMyAxMDYuOXMtMTE1LjYtNDYuNy0xMjUuMy0xMDYuOUM0NTIuMiA0NDkgNDg4IDQwNSA0ODggMzUydi0zMmMwLTE3LjctMTQuMy0zMi0zMi0zMmgtNjRjLTE3LjcgMC0zMiAxNC4zLTMyIDMydjMyYzAgMTcuNy0xNC4zIDMyLTMyIDMycy0zMi0xNC4zLTMyLTMydi0zMmMwLTE3LjctMTQuMy0zMi0zMi0zMmgtMzJjLTE3LjcgMC0zMiAxNC4zLTMyIDMydjMyYzAgMTcuNy0xNC4zIDMyLTMyIDMycy0zMi0xNC4zLTMyLTMydi0zMmMwLTE3LjctMTQuMy0zMi0zMi0zMkgyNTZjLTE3LjcgMC0zMiAxNC4zLTMyIDMydjMyYzAgMTcuNy0xNC4zIDMyLTMyIDMycy0zMi0xNC4zLTMyLTMydi0zMmMwLTE3LjctMTQuMy0zMi0zMi0zMkg2NGMtMTcuNyAwLTMyIDE0LjMtMzIgMzJ6Ii8+PC9zdmc+";
-    // 景點 (Sight)
-    const SIGHT_ICON = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjNENBRjUwIiBkPSJNMCAyNTZDMCAxMTQuNiAxMTQuNiAwIDI1NiAwczI1NiAxMTQuNiAyNTYgMjU2LTExNC42IDI1Ni0yNTYgMjU2UzAgMzk3LjQgMCAyNTZ6bTE4NyAxMzIuM2wxMjUuNC03NS43Yy42LS40IDEuNS0uNCAyLjEgMGwxMjUuNCA3NS43YzEuNyAxIDMuOC0uMiAzLjgtMi4xVjIxNi4zYzAtMS4xLS42LTIuMS0xLjYtMi43bC0xMjcuNi03Ny4zYy0xLjItLjctMi43LS43LTMuOSAwTCAxODUuNCAyMTMuNmMtMSAuNi0xLjYgMS42LTEuNiAyLjd2MTcwLjRjMCAxLjkgMi4xIDMuMSAzLjggMi4xem0yMjEuMi03Ni42bC0zNi4yLTIxLjggMzYuMi0yMi4xYzEuMi0uNyAxLjYtMi4yLjktMy40bC0yMC4xLTMzLjRjLS43LTEuMi0yLjItMS42LTMuNC0uOWwtMzUuNiAyMS44VjEyOC4zYzAtMS40LTEuMS0yLjUtMi41LTIuNWgtMzkuMWMtMS40IDAtMi41IDEuMS0yLjUgMi41djYxLjZsLTM1LjYtMjEuOGMtMS4yLS43LTIuNy0uMy0zLjQuOWwtMjAuMSAzMy40Yy0uNyAxLjItLjMgMi43LjkgMy40bDM2LjIgMjIuMS0zNi4yIDIxLjhjLTEuMi43LTEuNiAyLjItLjkgMy40bDIwLjEgMzMuNGMuNyAxLjIgMi4yIDEuNiAzLjQuOWwzNS42LTIxLjh2NjEuNmMwIDEuNCAxLjEgMi41IDIuNS 2LjVoMzkuMWMxLjQgMCAyLjUtMS4xIDIuNS0yLjVWMjkwbDM1LjYgMjEuOGMxLjIuNy 2LjcuMyAzLjQtLjlsMjAuMS0zMy40Yy43LTEuMi4zLTIuNy0uOS0zLjR6Ii8+PC9zdmc+";
-    // 購物 (Shop)
-    const SHOP_ICON = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjRTkxRTYzIiBkPSJNMTkyIDEyOHYtMzJjMC0zNS4zIDI4LjctNjQgNjQtNjRzNjQgMjguNyA2NCA2NHYzMmg4MGMxNy43IDAgMzIgMTQuMyAzMiAzMnYzMjBjMCAxNy43LTE0LjMgMzItMzIgMzJINzZjLTE3LjcgMC0zMi0xNC4zLTMyLTMyVjE2MGMwLTE3LjcgMTQuMy0zMiAzMi0zMmgxMTZ6bTQ4LTMyYzAtOC44LTcuMi0xNi0xNi0xNnMtMTYgNy4yLTE2IDE2djMyaDMydi0zMnoiLz48L3N2Zz4=";
-    // 車 (Car)
-    const CAR_ICON = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMjE5NkkzIiBkPSJNMTM1LjIgMTc2aDI0MS42YzguNSAwIDE1LjYtNi40IDE2LjgtMTQuOGwxNi4zLTExNC4xYy43LTUuMS0zLjItOS43LTguNC05LjdINTEwLjVjLTUuMiAwLTkuMiA0LjYtOC40IDkuN2wxNi4zIDExNC4xYzEuMiA4LjQgOC4zIDE0LjggMTYuOCAxNC44em0wIDMyYy0zNC41IDAtNjMuOSAyMi03My40IDU0LjJMNCAzODkuNGMtMi4yIDcuNSAzLjQgMTUuMyAxMS4yIDE1LjNoNDgxLjZjNy44IDAgMTMuNC03LjggMTEuMi0xNS4zTDQ1MC4yIDI2Mi4yYy05LjUtMzIuMi0zOC45LTU0LjItNzMuNC01NC4ySDEzNS4yem0zOC44IDEyOGMyMy4yIDAgNDIgMTguOCA0MiA0MnMtMTguOCA0Mi00MiA0Mi00Mi0xOC44LTQyLTQyIDE4LjgtNDIgNDItNDJ6bTMyOCAwYzIzLjIgMCA0MiAxOC44IDQyIDQyczLTE4LjggNDItNDIgNDItNDItMTguOC00Mi00MiAxOC44LTQyIDQyLTQyeiIvPjwvc3ZnPg==";
-
-    document.getElementById('headerIconImg').src = HEADER_ICON_SRC;
-
+    // 內建圖庫 (使用穩定連結)
     const ICONS = {
-        plane: PLANE_ICON,
-        boat: BOAT_ICON,
-        food: FOOD_ICON,
-        sight: SIGHT_ICON,
-        shop: SHOP_ICON,
-        car: CAR_ICON
+        // 飛機
+        plane: "https://cdn-icons-png.flaticon.com/512/7893/7893979.png", 
+        // 船
+        boat: "https://cdn-icons-png.flaticon.com/512/2942/2942544.png",
+        // 美食
+        food: "https://cdn-icons-png.flaticon.com/512/706/706164.png",
+        // 景點
+        sight: "https://cdn-icons-png.flaticon.com/512/3284/3284666.png",
+        // 購物
+        shop: "https://cdn-icons-png.flaticon.com/512/3081/3081559.png",
+        // 開車
+        car: "https://cdn-icons-png.flaticon.com/512/2554/2554978.png",
+        // 使用者自訂 (呼叫 'custom' 時會顯示您的照片)
+        custom: MY_PHOTO_URL 
     };
 
     // =========================================================
-    // 📅 行程資料 (V9.0 - 全圖示版)
+    // 📅 行程資料
     // =========================================================
     const itinerary = {
         1: {
@@ -278,22 +296,14 @@
     function loadDay(day) {
         document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
         
-        const bgText = document.getElementById('bgText');
-        const snowContainer = document.getElementById('snowContainer');
-
         if (typeof day === 'number') {
             document.querySelectorAll('.tab-btn')[day - 1].classList.add('active');
             updateExp(day);
             renderSchedule(day);
-            bgText.style.display = 'none';
-            snowContainer.style.display = 'none';
         } else {
             document.querySelectorAll('.tab-btn')[5].classList.add('active');
             updateExp(5); 
             renderInfo();
-            bgText.style.display = 'block';
-            snowContainer.style.display = 'block';
-            createSnow();
         }
     }
 
@@ -337,34 +347,30 @@
             html += `<div class="npc-dialog">${data.note}</div>`;
         }
 
-        content.innerHTML = html + `<div id="bgText">海底撈月</div>`; 
-        document.getElementById('bgText').style.display = 'none'; 
+        content.innerHTML = html;
         window.scrollTo(0,0);
     }
 
     function generateListHtml(events) {
         let listHtml = `<ul class="quest-list">`;
         events.forEach(event => {
-            // 導航連結 (開車)
             let navUrl = `https://www.google.com/maps/dir/?api=1&destination=${event.lat},${event.lng}&travelmode=driving`;
-            
-            // 資訊連結 (有 link 用 link，沒有則搜尋地圖)
             let infoUrl = event.link ? event.link : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.title)}&query_place_id=${event.lat},${event.lng}`;
             
-            let iconHtml = '';
-            // 使用 Base64 圖示
-            if(event.icon && ICONS[event.icon]) {
-                iconHtml = `<img src="${ICONS[event.icon]}" class="event-icon-img">`;
-            } else {
-                // 預設圖示 (如果沒設定)
-                iconHtml = `<img src="${ICONS['sight']}" class="event-icon-img">`;
+            // 優先使用自訂圖示
+            let iconSrc = ICONS['sight']; // 預設
+            if (event.icon && ICONS[event.icon]) {
+                iconSrc = ICONS[event.icon];
             }
 
             listHtml += `
                 <li class="quest-item">
                     <div class="quest-header">
                         <span class="quest-time">${event.time}</span>
-                        <span class="quest-title">${event.title} ${iconHtml}</span>
+                        <span class="quest-title">
+                            ${event.title} 
+                            <img src="${iconSrc}" class="event-icon-img" alt="icon">
+                        </span>
                     </div>
                     <div class="quest-desc">${event.desc}</div>
                     <div class="action-btns">
@@ -395,14 +401,24 @@
 
     function renderInfo() {
         document.getElementById('mainContent').innerHTML = `
-            <div id="bgText" style="display:block;">海底撈月</div>
-            <div style="text-align:center; padding-top:20px; position:relative; z-index:2;">
+            
+            <!-- 拉圖斯區域 -->
+            <div class="papulatus-container" style="display:block;">
+                <div class="speech-bubble">海底撈月</div>
+                <img src="https://maplestory.io/api/gms/62/mob/8500001/render/move?center=true" class="papulatus-img" alt="papulatus">
+            </div>
+
+            <div style="text-align:center; padding-top:20px;">
                 <h2>🏠 FAV HOTEL TAKAMATSU</h2>
                 <p>高松市中心</p>
                 <a href="https://www.google.com/maps/search/?api=1&query=FAV+HOTEL+TAKAMATSU" target="_blank" class="btn btn-hotel">
                     🏨 導航去飯店
                 </a>
-                <div class="npc-dialog">祝大家旅途愉快！<br>雪花特效載入中...</div>
+                <div class="npc-dialog">
+                    隊長筆記：<br>
+                    房間已確認，放好行李就來集合！<br>
+                    Info 頁面不計算 EXP 喔~
+                </div>
             </div>
         `;
     }
@@ -412,24 +428,11 @@
         if(typeof day === 'number') {
             pct = Math.min(100, Math.round((day/5)*100));
         } else {
+            // INFO 頁面不計算進度，顯示 100% 或保持 Day 5 的狀態
             pct = 100;
         }
         document.getElementById('expFill').style.width = pct + '%';
         document.getElementById('expText').innerText = pct + '%';
-    }
-
-    function createSnow() {
-        const container = document.getElementById('snowContainer');
-        container.innerHTML = '';
-        for(let i=0; i<30; i++) {
-            const snow = document.createElement('div');
-            snow.className = 'snowflake';
-            snow.innerText = '❄';
-            snow.style.left = Math.random() * 100 + 'vw';
-            snow.style.animationDuration = Math.random() * 3 + 2 + 's';
-            snow.style.fontSize = Math.random() * 10 + 10 + 'px';
-            container.appendChild(snow);
-        }
     }
 
     async function fetchWeatherDetailed(lat, long, loc) {
@@ -441,36 +444,32 @@
         tEl.innerText = "--"; dEl.innerText = "讀取中..."; iEl.innerText = "⏳";
 
         try {
-            const r = Date.now();
-            const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current_weather=true&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FTokyo&t=${r}`;
+            // 只抓「現在」的天氣，避免日期錯誤導致 API 失敗
+            const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current_weather=true&timezone=Asia%2FTokyo`;
             
             const res = await fetch(url);
             if(!res.ok) throw new Error("API Error");
             const data = await res.json();
             
             const current = data.current_weather;
-            const daily = data.daily;
             const temp = Math.round(current.temperature);
-            const max = Math.round(daily.temperature_2m_max[0]);
-            const min = Math.round(daily.temperature_2m_min[0]);
-            const rainProb = daily.precipitation_probability_max[0];
             const code = current.weathercode;
 
             let iconChar = "☀"; let statusText = "晴朗";
-            if (code >= 71 && code <= 77) { iconChar = "❄️"; statusText = "下雪"; }
-            else if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) { iconChar = "🌧"; statusText = "有雨"; }
-            else if (code === 45 || code === 48) { iconChar = "🌫"; statusText = "有霧"; }
-            else if (code >= 1 && code <= 3) { iconChar = "⛅"; statusText = "多雲"; } 
-            else { iconChar = "☀"; statusText = "晴朗"; }
-
+            if (code >= 71) { iconChar = "❄️"; statusText = "下雪"; }
+            else if (code >= 51) { iconChar = "🌧"; statusText = "有雨"; }
+            else if (code >= 45) { iconChar = "🌫"; statusText = "有霧"; }
+            else if (code >= 1) { iconChar = "⛅"; statusText = "多雲"; } 
+            
             tEl.innerText = `${temp}°`;
             iEl.innerText = iconChar;
-            dEl.innerHTML = `${statusText} (降雨 ${rainProb}%)<br>高 ${max}° / 低 ${min}°`;
+            dEl.innerText = `${statusText} (即時)`;
 
         } catch(e) {
             console.log("Weather Error:", e);
             tEl.innerText = "?"; iEl.innerText = "⚠️";
-            dEl.innerHTML = `無法讀取<br><a href="https://www.google.com/search?q=weather+${loc}" target="_blank" class="weather-fallback-btn">🔍 Google 天氣</a>`;
+            // 失敗時直接給 Google 天氣連結按鈕
+            dEl.innerHTML = `<a href="https://www.google.com/search?q=weather+${loc}" target="_blank" class="weather-fallback-btn">🔍 點我看天氣</a>`;
         }
     }
 
