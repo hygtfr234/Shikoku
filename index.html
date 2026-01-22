@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>四國冒險日誌 V25.0</title>
+    <title>四國冒險日誌 V27.0</title>
     
-    <!-- 🍄 核心修復：強制 Android 讀取菇菇圖示 -->
-    <link rel="icon" type="image/png" href="https://maplestory.io/api/gms/62/mob/1210102/render?center=true&v=2026">
-    <link rel="shortcut icon" href="https://maplestory.io/api/gms/62/mob/1210102/render?center=true&v=2026">
-    <link rel="apple-touch-icon" href="https://maplestory.io/api/gms/62/mob/1210102/render?center=true&v=2026">
+    <!-- 🍄 強制刷新圖示 -->
+    <link rel="icon" type="image/png" href="https://maplestory.io/api/gms/62/mob/1210102/render?center=true&v=27">
+    <link rel="shortcut icon" sizes="196x196" href="https://maplestory.io/api/gms/62/mob/1210102/render?center=true&v=27">
+    <link rel="apple-touch-icon" href="https://maplestory.io/api/gms/62/mob/1210102/render?center=true&v=27">
     
-    <!-- 📱 微型 Manifest：告訴安卓這是一個獨立 APP -->
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoi5Zub5ZyL5YpS6ZqqIiwi\
     c2hvcnRfbmFtZSI6IuWbm+Wci+WKUumaqiIsImljb25zIjpbeyJzcmMiOiJodHRwczovL21hcGxlc3RvcnkuaW8vYXBpL2dt\
-    cy82Mi9tb2IvMTIxMDEwMi9yZW5kZXI/Y2VudGVyPXRydWUiLCJzaXplcyI6IjE5MngxOTIiLCJ0eXBlIjoiaW1hZ2UvcG5n\
-    In1dLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJ0aGVtZV9jb2xvciI6IiM4N0NFRUIiLCJiYWNr\
-    Z3JvdW5kX2NvbG9yIjoiIzhGQ0VFQiJ9">
+    cy82Mi9tb2IvMTIxMDEwMi9yZW5kZXI/Y2VudGVyPXRydWUmdj0yNyIsInNpemVzIjoiMTkyeDE5MiIsInR5cGUiOiJpbWFn\
+    ZS9wbmciHSwie3sic3JjIjoiaHR0cHM6Ly9tYXBsZXN0b3J5LmlvL2FwaS9nbXMvNjIvbW9iLzEyMTAxMDIvcmVuZGVyP2Nl\
+    bnRlcj10cnVlJnY9MjciLCJzaXplcyI6IjUxMng1MTIiLCJ0eXBlIjoiaW1hZ2UvcG5nIn1dLCJzdGFydF91cmwiOiIuIiwi\
+    ZGlzcGxheSI6InN0YW5kYWxvbmUiLCJ0aGVtZV9jb2xvciI6IiM4N0NFRUIiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzhGQ0VF\
+    QiJ9">
 
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;900&family=Noto+Serif+TC:wght@900&display=swap" rel="stylesheet">
     <style>
@@ -127,16 +128,18 @@
         }
         .plane-icon { width: 35px; height: 35px; margin-left: 8px; vertical-align: middle; filter: drop-shadow(1px 1px 0 rgba(0,0,0,0.2)); }
 
-        /* 底部 Bar */
+        /* 底部 Bar (EXP / Guild) */
         .footer-bar-container {
             position: fixed; bottom: 0; left: 0; width: 100%; height: 35px;
             background: #2b2b2b; border-top: 2px solid #FFD700;
             display: flex; align-items: center; padding: 0 15px; z-index: 999;
         }
+        /* EXP Bar 樣式 */
         .exp-track { flex: 1; height: 12px; background: #111; border-radius: 8px; overflow: hidden; border: 1px solid #555; }
         .exp-fill { height: 100%; background: linear-gradient(to bottom, #00FF00, #00CC00); width: 99.99%; }
         .exp-text { color: #FFF; font-size: 12px; margin-left: 10px; font-family: monospace; white-space: nowrap; }
         
+        /* 公會廣播樣式 (彩虹跑馬燈) */
         .guild-marquee {
             width: 100%; font-weight: bold; font-size: 14px;
             display: flex; align-items: center; justify-content: center;
@@ -148,6 +151,7 @@
             45% { color: #00ff00; } 60% { color: #0000ff; } 75% { color: #4b0082; } 100% { color: #9400d3; }
         }
 
+        /* NPC 對話框 */
         .npc-dialog {
             background: #FFF8DC; border: 2px solid #DAA520; border-radius: 12px;
             padding: 15px 15px 15px 65px; position: relative; margin-top: 25px;
@@ -165,7 +169,7 @@
         .sub-nav-btn.active-main { background: #FFF; border-color: #FFCC00; color: #333; }
         .sub-nav-btn.active-backup { background: #E6E6FA; border-color: #9370DB; color: #4B0082; }
 
-        /* INFO 頁面排版優化 */
+        /* INFO 頁面專屬 */
         .papulatus-wrapper {
             position: relative; text-align: center; margin-top: 20px; height: 220px;
         }
@@ -181,7 +185,7 @@
         .drop-item {
             width: 45px; height: 45px; position: absolute; animation: bounceDrop 2s infinite; filter: drop-shadow(0 0 5px yellow); z-index: 3;
         }
-        /* 寶物位置分散 */
+        /* 寶物位置調整 */
         .drop-1 { top: 90px; left: 5%; animation-delay: 0s; }
         .drop-2 { top: 70px; right: 5%; animation-delay: 0.5s; }
         .drop-3 { top: 150px; right: 20%; animation-delay: 1s; } 
@@ -290,7 +294,7 @@
     };
 
     // =========================================================
-    // 📅 行程資料 (V25.0 - 內建天氣+修正版)
+    // 📅 行程資料 (V27.0 - 精準導航版)
     // =========================================================
     const itinerary = {
         1: {
@@ -299,11 +303,12 @@
             weather: { temp: "7°", status: "陰", detail: "H:7° L:1°", icon: WEATHER_CLOUD },
             events: [
                 { time: "07:00", title: "CI278 桃園起飛", desc: "前往高松，冒險開始！", icon: 'plane', noNav: true },
-                { time: "10:20", title: "抵達高松空港", desc: "入境、前往 Toyota 租車", lat: 34.2127, lng: 134.0175, icon: 'car', link: "https://www.google.com/search?q=toyota+rent+a+car+takamatsu+airport+shop" },
-                { time: "12:00", title: "租車 & 午餐", desc: "涮乃葉 (補充體力)", lat: 34.2963, lng: 134.0441, link: "https://maps.app.goo.gl/KdNuojGtmtbTNwVn7", icon: 'food' },
-                { time: "13:30", title: "栗林公園", desc: "米其林三星庭園 (2H)", lat: 34.3297, lng: 134.0444, icon: 'sight' },
-                { time: "17:30", title: "商店街散步", desc: "八大條商店街自由逛", lat: 34.3444, lng: 134.0522, icon: 'shop' },
-                { time: "18:30", title: "Vent Buffet", desc: "晚餐時光", lat: 34.3512, lng: 134.0560, link: "https://maps.app.goo.gl/uX7nC3x7z8x9", icon: 'dinner' }
+                { time: "10:20", title: "抵達高松空港", desc: "入境、前往 Toyota 租車", icon: 'car', navLink: "https://maps.app.goo.gl/nuF1de38tVXAUcE97", link: "https://maps.app.goo.gl/nuF1de38tVXAUcE97" },
+                { time: "12:00", title: "租車 & 午餐", desc: "涮乃葉 (補充體力)", icon: 'food', navLink: "https://maps.app.goo.gl/KdNuojGtmtbTNwVn7" },
+                { time: "13:30", title: "栗林公園", desc: "米其林三星庭園 (2H)", icon: 'sight', navLink: "https://maps.app.goo.gl/nuF1de38tVXAUcE97" }, 
+                // 注意：栗林公園您的需求中沒有特別更新連結，若需要可隨時補充，此處維持邏輯
+                { time: "17:30", title: "商店街散步", desc: "八大條商店街自由逛", icon: 'shop', navLink: "https://share.google/8AOmOZ3h5y4ulhhzR", link: "https://share.google/8AOmOZ3h5y4ulhhzR" },
+                { time: "18:30", title: "Vent Buffet", desc: "晚餐時光", icon: 'dinner', navLink: "https://share.google/sBoruhr9jm8CtVdE1", link: "https://share.google/sBoruhr9jm8CtVdE1" }
             ],
             note: "小心駕駛!這裡禁止賽恩放R"
         },
@@ -312,11 +317,11 @@
             date: "1/24 (六)", location: "Takamatsu",
             weather: { temp: "8°", status: "雪/晴", detail: "H:8° L:2°", icon: WEATHER_MIX },
             events: [
-                { time: "08:00", title: "高松港 → 土庄港", desc: "搭乘渡輪 (約1H)", lat: 34.3524, lng: 134.0520, icon: 'boat' },
-                { time: "09:30", title: "橄欖公園", desc: "魔女宅急便掃帚拍照", lat: 34.4754, lng: 134.2947, icon: 'nature' },
-                { time: "11:30", title: "醬之鄉", desc: "醬油霜淇淋", lat: 34.4633, lng: 134.3317, icon: 'ice' },
-                { time: "14:00", title: "天使之路", desc: "退潮沙灘散步", lat: 34.4746, lng: 134.1849, icon: 'sight' },
-                { time: "16:00", title: "返回高松", desc: "搭船回市區", lat: 34.4827, lng: 134.1754, icon: 'boat' }
+                { time: "08:00", title: "高松港 → 土庄港", desc: "搭乘渡輪 (約1H)", icon: 'boat', navLink: "https://maps.app.goo.gl/3197KYMnoQUJgDnC9" },
+                { time: "09:30", title: "橄欖公園", desc: "魔女宅急便掃帚拍照", icon: 'nature', navLink: "https://maps.app.goo.gl/2FRV2NFN67UiiF7z5" },
+                { time: "11:30", title: "醬之鄉", desc: "丸金醬油紀念館", icon: 'ice', navLink: "https://maps.app.goo.gl/AGoWGLM66ryZpmx47" },
+                { time: "14:00", title: "天使之路", desc: "退潮沙灘散步", icon: 'sight', navLink: "https://maps.app.goo.gl/GKXp6L2afkPf11m68" },
+                { time: "16:00", title: "土庄港 → 高松港", desc: "搭船回市區", icon: 'boat', navLink: "https://maps.app.goo.gl/hprFCKkvTNSrXRT27", link: "https://maps.app.goo.gl/hprFCKkvTNSrXRT27" }
             ],
             note: `若海況不佳，B計畫改去「滿濃公園」。<br><a href="https://maps.app.goo.gl/eeARXireyGCwiDNd9" target="_blank" style="color:red; font-weight:bold; text-decoration:underline;">🔴 點我開始導航去滿濃公園</a>`
         },
@@ -325,16 +330,17 @@
             date: "1/25 (日)", location: "Takamatsu",
             weather: { temp: "8°", status: "陰/晴", detail: "H:8° L:1°", icon: WEATHER_CLOUD },
             eventsMain: [
-                { time: "09:00", title: "金刀比羅宮", desc: "挑戰1368階梯，參拜狗狗神", lat: 34.1837, lng: 133.8122, icon: 'shrine' },
-                { time: "12:30", title: "山越烏龍麵", desc: "烏龍麵名店午餐", lat: 34.2384, lng: 133.9213, icon: 'food' },
-                { time: "14:30", title: "滿濃公園", desc: "國營公園賞花散步", lat: 34.1678, lng: 133.8647, icon: 'sight', link: "https://maps.app.goo.gl/eeARXireyGCwiDNd9" },
-                { time: "18:00", title: "市區晚餐", desc: "返回高松", lat: 34.3428, lng: 134.0466, icon: 'dinner' }
+                { time: "09:00", title: "金刀比羅宮", desc: "挑戰1368階梯，參拜狗狗神", icon: 'shrine', navLink: "https://maps.app.goo.gl/pksTiU7nz1dW48D8A" },
+                { time: "12:30", title: "山越烏龍麵", desc: "烏龍麵名店午餐", icon: 'food', navLink: "https://maps.app.goo.gl/4UgroFhDnHTfAA2UA" },
+                { time: "14:30", title: "滿濃公園", desc: "國營公園賞花散步", icon: 'sight', navLink: "https://maps.app.goo.gl/ZWPQL29vTGX4pNRN7", link: "https://maps.app.goo.gl/eeARXireyGCwiDNd9" },
+                // 晚餐特殊處理: 導航=Link1, 資訊=Link2
+                { time: "18:00", title: "市區晚餐", desc: "推薦：Liaison / 居酒屋", icon: 'dinner', navLink: "https://maps.app.goo.gl/HiNLph8PKK5AQnNr8", link: "https://share.google/oWZyiVjn0wUMJm3YC" }
             ],
             eventsBackup: [
-                { time: "09:00", title: "前往男木島", desc: "高松港搭船前往", lat: 34.3524, lng: 134.0520, icon: 'boat' },
-                { time: "10:00", title: "男木島 (貓島)", desc: "豐玉姬神社、擼貓散步", lat: 34.4262, lng: 134.0560, icon: 'cat' },
-                { time: "13:00", title: "返回高松", desc: "市區午餐 & 購物", lat: 34.3428, lng: 134.0466, icon: 'shop' },
-                { time: "15:00", title: "室內行程", desc: "商店街 / 咖啡廳休息", lat: 34.3444, lng: 134.0522, icon: 'coffee' }
+                { time: "09:00", title: "前往男木島", desc: "高松港搭船前往", icon: 'boat', navLink: "https://maps.app.goo.gl/3197KYMnoQUJgDnC9" },
+                { time: "10:00", title: "男木島 (貓島)", desc: "豐玉姬神社、擼貓散步", icon: 'cat', navLink: "https://maps.app.goo.gl/b2vevyKvApfrHUkJ9", link: "https://maps.app.goo.gl/b2vevyKvApfrHUkJ9" },
+                { time: "13:00", title: "男木港 → 高松港", desc: "返回市區", icon: 'boat', navLink: "https://maps.app.goo.gl/Soefr2nUzymefXqdA", link: "https://maps.app.goo.gl/Soefr2nUzymefXqdA" },
+                { time: "15:00", title: "室內行程", desc: "商店街 / 咖啡廳休息", icon: 'coffee', navLink: "https://maps.app.goo.gl/yVYtBP5ktURNsApz7", link: "https://maps.app.goo.gl/yVYtBP5ktURNsApz7" }
             ],
             note: "根據當天體力和天氣，自由切換上方按鈕選擇行程！"
         },
@@ -343,11 +349,11 @@
             date: "1/26 (一)", location: "Takamatsu",
             weather: { temp: "9°", status: "陰", detail: "H:9° L:1°", icon: WEATHER_CLOUD },
             events: [
-                { time: "08:00", title: "前往倉敷", desc: "自駕/JR (瀨戶大橋)", lat: 34.5951, lng: 133.7667, icon: 'car' },
-                { time: "10:00", title: "倉敷美觀地區", desc: "運河遊船、古街散步", lat: 34.5957, lng: 133.7712, icon: 'sakura' },
-                { time: "12:00", title: "古市烏龍麵", desc: "午餐推薦", lat: 34.5961, lng: 133.7692, link: "https://maps.app.goo.gl/6z3z3", icon: 'noodle' },
-                { time: "14:00", title: "茶屋大橋", desc: "水果聖代下午茶", lat: 34.5952, lng: 133.7720, icon: 'ice' },
-                { time: "17:00", title: "返回高松", desc: "車程約 1.5 - 2 小時", lat: 34.3428, lng: 134.0466, icon: 'car' }
+                { time: "08:00", title: "前往倉敷", desc: "自駕/JR (瀨戶大橋)", icon: 'car', navLink: "https://maps.app.goo.gl/MCqK6jsAX4tsC22L6", link: "https://maps.app.goo.gl/MCqK6jsAX4tsC22L6" },
+                { time: "10:00", title: "倉敷美觀地區", desc: "運河遊船、古街散步", icon: 'sakura', navLink: "https://maps.app.goo.gl/MCqK6jsAX4tsC22L6" }, 
+                { time: "12:00", title: "古市烏龍麵", desc: "午餐推薦", icon: 'noodle', navLink: "https://maps.app.goo.gl/KeZqCFvzyRBpykA16", link: "https://maps.app.goo.gl/KeZqCFvzyRBpykA16" },
+                { time: "14:00", title: "茶屋大橋", desc: "水果聖代下午茶", icon: 'ice', navLink: "https://maps.app.goo.gl/krTbwdcA1MFKwRNE7" },
+                { time: "17:00", title: "返回高松", desc: "車程約 1.5 - 2 小時", icon: 'car', navLink: "https://maps.app.goo.gl/MfBJ7G9tuwuL7tMe6", link: "https://maps.app.goo.gl/MfBJ7G9tuwuL7tMe6" }
             ],
             note: "記得留肚子吃甜點！"
         },
@@ -356,11 +362,12 @@
             date: "1/27 (二)", location: "Takamatsu",
             weather: { temp: "11°", status: "陰", detail: "H:11° L:3°", icon: WEATHER_CLOUD },
             events: [
-                { time: "10:00", title: "高松中央商店街", desc: "八大條商店街 自由逛", lat: 34.3444, lng: 134.0522, icon: 'shop' },
-                { time: "10:00", title: "丸龜町 GREEN", desc: "時尚購物商場", lat: 34.3444, lng: 134.0490, icon: 'shop' },
-                { time: "10:00", title: "日本海豚中心", desc: "Japan Dolphin Center", lat: 34.2882, lng: 134.2690, icon: 'dolphin' },
-                { time: "14:30", title: "還車 (Toyota 空港店)", desc: "加油、還車", lat: 34.2127, lng: 134.0175, icon: 'car', link: "https://www.google.com/search?q=toyota+rent+a+car+takamatsu+airport+shop" },
-                { time: "18:55", title: "CI179 起飛返台", desc: "Bye Bye!", lat: 34.2142, lng: 134.0157, icon: 'plane', noNav: true }
+                { time: "10:00", title: "高松中央商店街", desc: "八大條商店街 自由逛", icon: 'shop', navLink: "https://maps.app.goo.gl/WP9XyWyJuTXSBDYK9" },
+                { time: "10:00", title: "丸龜町 GREEN", desc: "時尚購物商場", icon: 'shop', navLink: "https://maps.app.goo.gl/1E4zV6mWaijafD2z8" },
+                { time: "10:00", title: "日本海豚中心", desc: "Japan Dolphin Center", icon: 'dolphin', navLink: "https://maps.app.goo.gl/6QjK2USV3688jXuT6" },
+                { time: "10:00", title: "四國水族館", desc: "新景點推薦", icon: 'fish', navLink: "https://maps.app.goo.gl/NFAziUMgPVTiQaUG8", link: "https://maps.app.goo.gl/NFAziUMgPVTiQaUG8" },
+                { time: "14:30", title: "還車 (Toyota 空港店)", desc: "加油、還車", icon: 'car', navLink: "https://maps.app.goo.gl/nuF1de38tVXAUcE97", link: "https://maps.app.goo.gl/nuF1de38tVXAUcE97" },
+                { time: "18:55", title: "CI179 起飛返台", desc: "Bye Bye!", icon: 'plane', noNav: true }
             ],
             note: "HP藥水已耗盡，寵物將禁止您明日上班上課"
         }
@@ -435,23 +442,38 @@
     function generateListHtml(events) {
         let listHtml = `<ul class="quest-list">`;
         events.forEach(event => {
-            let navUrl = `https://www.google.com/maps/dir/?api=1&destination=${event.lat},${event.lng}&travelmode=driving`;
-            let infoUrl = event.link ? event.link : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.title)}&query_place_id=${event.lat},${event.lng}`;
             
+            // 優先使用自訂圖示
             let iconSrc = ICONS['sight']; 
             if (event.icon && ICONS[event.icon]) {
                 iconSrc = ICONS[event.icon];
             }
 
+            // 按鈕 HTML 生成邏輯
             let btnsHtml = '';
+            
+            // 如果 noNav 為 true (飛機)，不顯示按鈕
             if (!event.noNav) {
+                // 1. 導航按鈕 (navLink 優先，沒有則用 lat/lng，但 V27 全都有 navLink 了)
+                let navLink = event.navLink ? event.navLink : `https://www.google.com/maps/dir/?api=1&destination=${event.lat},${event.lng}&travelmode=driving`;
+                
+                // 2. 資訊按鈕 (link 優先，沒有則隱藏或連去導航)
+                let infoBtn = '';
+                if (event.link) {
+                    infoBtn = `<a href="${event.link}" target="_blank" class="btn btn-info">i</a>`;
+                } else {
+                    // 如果沒有 link，預設連到 navLink 或是 Google 搜尋
+                    let searchUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.title)}`;
+                    infoBtn = `<a href="${navLink}" target="_blank" class="btn btn-info">i</a>`;
+                }
+
                 btnsHtml = `
                     <div class="action-btns">
-                        <a href="${navUrl}" target="_blank" class="btn btn-nav">
+                        <a href="${navLink}" target="_blank" class="btn btn-nav">
                             <img src="${ICONS.nav}" style="width:20px; vertical-align:middle; margin-right:5px;">
                             導航 GO
                         </a>
-                        <a href="${infoUrl}" target="_blank" class="btn btn-info">i</a>
+                        ${infoBtn}
                     </div>
                 `;
             }
@@ -548,4 +570,4 @@
 </script>
 
 </body>
-</html>ss,Xi,wqxq,qqa
+</html>
