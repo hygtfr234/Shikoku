@@ -318,10 +318,17 @@
             note: "小心駕駛!這裡禁止賽恩放R"
         },
         2: {
-            title: "Day 2｜小豆島",
+            title: "Day 2｜高松探索",
             date: "1/24 (六)", location: "Takamatsu",
             weather: { temp: "8°", status: "雪/晴", detail: "H:8° L:2°", icon: WEATHER_MIX },
-            events: [
+            eventsMain: [
+                { time: "10:00", title: "Uniqlo購物", desc: "還我技能書", icon: 'shrine', navLink: "https://maps.app.goo.gl/5kb8Zbv7AMxdfkAY8" },
+                { time: "14:30", title: "中野烏冬麵學校", desc: "小心醣暈", icon: 'sight', navLink: "https://maps.app.goo.gl/hrhZYqad8Z5QgViQA" },
+                // 晚餐分流 (兩間分開顯示)
+                { time: "18:00", title: "黒毛和牛 焼肉", desc: "晚餐推薦 1", icon: 'dinner', navLink: "https://maps.app.goo.gl/hgZpxDwi5b5kxAqF8" },
+                { time: "18:00", title: "骨付鳥 一鶴", desc: "晚餐推薦 2", icon: 'dinner', navLink: "https://maps.app.goo.gl/k8Cm5CoBBGJURUKe8" }
+            ],
+            eventsBackup: [
                 // 高松港 -> 土庄港 連結更新
                 { time: "08:00", title: "高松港 → 土庄港", desc: "搭乘渡輪 (約1H)", icon: 'boat', navLink: "https://maps.app.goo.gl/3197KYMnoQUJgDnC9" },
                 // 橄欖公園連結更新
